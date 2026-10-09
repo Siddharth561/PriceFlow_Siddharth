@@ -1,0 +1,30 @@
+{
+  "requested_episodes": 10000,
+  "completed_training_episodes": 10000,
+  "timesteps": 240000,
+  "episode_horizon": 24,
+  "seed": 42,
+  "training_mean_reward": 4333.7125206826,
+  "training_std_reward": 894.1078737242178,
+  "evaluation_episodes": 100,
+  "evaluation_mean_reward": 4554.757702826981,
+  "evaluation_std_reward": 650.3705714183652,
+  "model_path": "C:\\Users\\HP\\PriceFlow_Siddharth\\models\\dqn_pricing.zip",
+  "training_episode_rewards_path": "C:\\Users\\HP\\PriceFlow_Siddharth\\results\\training_episode_rewards.csv",
+  "evaluation_episode_rewards_path": "C:\\Users\\HP\\PriceFlow_Siddharth\\results\\evaluation_episode_rewards.csv",
+  "reward_curve_path": "C:\\Users\\HP\\PriceFlow_Siddharth\\results\\reward_curve.png",
+  "evaluation_plot_path": "C:\\Users\\HP\\PriceFlow_Siddharth\\results\\evaluation_rewards.png",
+  "hyperparameters": {
+    "learning_rate": 0.0005,
+    "buffer_size": 50000,
+    "batch_size": 64,
+    "gamma": 0.99,
+    "learning_starts": 2000,
+    "exploration_initial_eps": 1.0,
+    "exploration_final_eps": 0.05,
+    "exploration_fraction": 0.3,
+    "target_update_interval": 1000,
+    "train_frequency": 4
+  },
+  "summary_path": "C:\\Users\\HP\\PriceFlow_Siddharth\\results\\training_summary.json"
+}

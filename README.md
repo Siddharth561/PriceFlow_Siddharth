@@ -311,37 +311,38 @@ The under-50-ms **end-to-end** target is not met in this measurement: p50 and me
 - Real deployments would need feature engineering, offline validation, hidden test sets, operational safeguards, and live A/B monitoring.
 - MongoDB persistence is optional and graceful-failure only; currently it runs synchronously and can dominate API latency.
 
-## Git commands for creating and publishing the repository
+## Git review and submission
 
-The workspace did not have a Git repository initialized at the time of this audit (`git rev-parse --show-toplevel` returned no repository). Review the ignore rules and staged files before creating a repository or pushing. On PowerShell:
+This project already has a Git repository on branch `main` with an `origin` remote. Do not run `git init` or add a second remote. Before committing, review the working tree and stage only intended project files:
 
 ```powershell
-git init
-git status --short
-git check-ignore -v .env .env.example venv results/training_summary.json models/dqn_pricing.zip data/rides_trips.csv
-git add .
+git status --short --branch
+git check-ignore -v .env venv .pytest_cache results/train_monitor.monitor.csv
+git diff --cached --stat
+git diff --cached --check
+```
+
+The ignore rules exclude `.env`, virtual environments, caches, IDE state, temporary files, and runtime logs. They allow the safe `.env.example`, trained model, dataset, training/evaluation metrics, and plots. Stage project source and intended artifacts explicitly rather than using `git add .`; then inspect the complete staged file list and diff:
+
+```powershell
+git add .gitignore .env.example README.md requirements.txt config.py
+git add api environment evaluation training src
+git add data/generate_data.py data/rides_trips.csv models/dqn_pricing.zip
+git add results/.gitkeep results/training_summary.json results/training_episode_rewards.csv results/evaluation_episode_rewards.csv
+git add results/ab_test_metrics.json results/ab_test_metrics.csv results/ab_test_scenarios.csv
+git add results/reward_curve.png results/evaluation_rewards.png results/cumulative_revenue.png results/reward_comparison.png results/policy_regret.png
 git status --short
 git diff --cached --stat
 git diff --cached --check
 git diff --cached
 ```
 
-Confirm `.env` and `venv/` are ignored, while `.env.example`, the model, dataset, metrics, and plots are included. Then commit:
+Confirm `.env`, `venv/`, caches, and `results/train_monitor.monitor.csv` do not appear as staged files. Do not commit until the staged diff has been reviewed. To commit and push using the already configured `origin`:
 
 ```powershell
 git commit -m "Submit PriceFlow dynamic pricing engine" -m "Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
-git branch -M main
+git push origin main
 ```
-
-Create an empty GitHub repository (without adding an initial README/license), set its URL, and push:
-
-```powershell
-git remote add origin https://github.com/<your-user>/PriceFlow_Siddharth.git
-git remote -v
-git push -u origin main
-```
-
-If `origin` already exists, use `git remote set-url origin https://github.com/<your-user>/PriceFlow_Siddharth.git` instead of adding it again.
 
 ## Reproduce the assignment pipeline
 
